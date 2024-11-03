@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reprodução de Vídeo - Dragon Ball Super</title>
+    <style>
+        body {
+            background-color: #141414;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        #container {
+            text-align: center;
+            max-width: 700px;
+            margin: auto;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        video {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.8);
+        }
+
+        #controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #e50914;
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #f40612;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1 id="title">Assistindo Dragon Ball Super - Episódio 82</h1>
+        <video id="videoPlayer" controls>
+            <source src="https://p1.animescomix.com/stream/animes-dublado/d/dragon-ball-super-dublado/82.mp4" type="video/mp4">
+            Seu navegador não suporta o elemento de vídeo.
+        </video>
+        <div id="controls">
+            <button onclick="nextEpisode()">Próximo Episódio</button>
+        </div>
+    </div>
+
+    <script>
+        let episodeNumber = 82;
+        const videoPlayer = document.getElementById("videoPlayer");
+        const title = document.getElementById("title");
+
+        function nextEpisode() {
+            episodeNumber++;
+            title.textContent = `Assistindo Dragon Ball Super - Episódio ${episodeNumber}`;
+            videoPlayer.src = `https://p1.animescomix.com/stream/animes-dublado/d/dragon-ball-super-dublado/${episodeNumber}.mp4`;
+            videoPlayer.load();
+
+            videoPlayer.onloadedmetadata = () => {
+                videoPlayer.currentTime = 180; // Inicia no minuto 3
+                videoPlayer.play();
+                enterFullScreen();
+            };
+        }
+
+        // Monitora o tempo restante do vídeo e avança para o próximo episódio quando faltar 3 minutos
+        videoPlayer.ontimeupdate = () => {
+            const timeRemaining = videoPlayer.duration - videoPlayer.currentTime;
+            if (timeRemaining <= 180 && !videoPlayer.nextEpisodeScheduled) { // 180 segundos = 3 minutos
+                videoPlayer.nextEpisodeScheduled = true; // Garante que o próximo episódio só será chamado uma vez
+                nextEpisode();
+            }
+        };
+
+        function enterFullScreen() {
+            if (videoPlayer.requestFullscreen) {
+                videoPlayer.requestFullscreen();
+            } else if (videoPlayer.webkitRequestFullscreen) { // Para navegadores como Safari
+                videoPlayer.webkitRequestFullscreen();
+            } else if (videoPlayer.mozRequestFullScreen) { // Para navegadores como Firefox
+                videoPlayer.mozRequestFullScreen();
+            } else if (videoPlayer.msRequestFullscreen) { // Para Internet Explorer/Edge
+                videoPlayer.msRequestFullscreen();
+            }
+        }
+    </script>
+</body>
+</html>
