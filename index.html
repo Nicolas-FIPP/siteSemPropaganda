@@ -3,107 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reprodução de Vídeo - Dragon Ball Super</title>
+    <title>BOM DIA SAMUEL TUDO BOM ?</title>
     <style>
+        /* Adicione uma imagem de fundo */
         body {
-            background-color: #141414;
-            color: #fff;
+            font-family: Arial, sans-serif;
+            background-image: url('./samba.png');
+            background-size: cover;
             display: flex;
             align-items: center;
             justify-content: center;
             height: 100vh;
             margin: 0;
-            font-family: Arial, sans-serif;
+            color: #ffffff;
         }
 
-        #container {
+        /* Container principal */
+        .container {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
             text-align: center;
-            max-width: 700px;
-            margin: auto;
         }
 
         h1 {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
+            font-size: 24px;
+            margin-bottom: 10px;
         }
 
-        video {
+        label, input {
+            display: block;
+            margin: 10px 0;
+            font-size: 18px;
+        }
+
+        input[type="number"] {
+            padding: 8px;
             width: 100%;
-            height: auto;
-            border-radius: 8px;
-            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.8);
-        }
-
-        #controls {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 10px;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
         }
 
         button {
             padding: 10px 20px;
+            background-color: #007acc;
             border: none;
+            color: white;
+            font-size: 16px;
             border-radius: 5px;
-            background-color: #e50914;
-            color: #fff;
-            font-size: 1rem;
             cursor: pointer;
-            transition: background-color 0.3s;
+            margin-top: 10px;
         }
 
-        button:hover {
-            background-color: #f40612;
+        .result {
+            margin-top: 20px;
+            font-size: 20px;
         }
     </style>
 </head>
 <body>
-    <div id="container">
-        <h1 id="title">Assistindo Dragon Ball Super - Episódio 82</h1>
-        <video id="videoPlayer" controls>
-            <source src="https://p1.animescomix.com/stream/animes-dublado/d/dragon-ball-super-dublado/82.mp4" type="video/mp4">
-            Seu navegador não suporta o elemento de vídeo.
-        </video>
-        <div id="controls">
-            <button onclick="nextEpisode()">Próximo Episódio</button>
-        </div>
+    <div class="container">
+        <h1>ÓTIMA SEMANA SAMBA OLE OLE</h1>
+        <label for="x">Valor de X:</label>
+        <input type="number" id="x" name="x">
+
+        <label for="y">Valor de Y:</label>
+        <input type="number" id="y" name="y">
+
+        <label for="z">Valor de Z:</label>
+        <input type="number" id="z" name="z">
+
+        <button onclick="calcular()">Calcular</button>
+
+        <div class="result" id="resultado1"></div>
+        <div class="result" id="resultado2"></div>
+        <div class="result" id="resultado3"></div>
     </div>
 
     <script>
-        let episodeNumber = 82;
-        const videoPlayer = document.getElementById("videoPlayer");
-        const title = document.getElementById("title");
+        function calcular() {
+            const x = parseFloat(document.getElementById("x").value);
+            const y = parseFloat(document.getElementById("y").value);
+            const z = parseFloat(document.getElementById("z").value);
 
-        function nextEpisode() {
-            episodeNumber++;
-            title.textContent = `Assistindo Dragon Ball Super - Episódio ${episodeNumber}`;
-            videoPlayer.src = `https://p1.animescomix.com/stream/animes-dublado/d/dragon-ball-super-dublado/${episodeNumber}.mp4`;
-            videoPlayer.load();
+            if (!isNaN(x) && !isNaN(y) && !isNaN(z)) {
+                const resultado1 = 2 * x + 11;
+                const resultado2 = 2 * z + y - 5;
+                const resultado3 = Math.abs(y + z - x);
 
-            videoPlayer.onloadedmetadata = () => {
-                videoPlayer.currentTime = 180; // Inicia no minuto 3
-                videoPlayer.play();
-                enterFullScreen();
-            };
-        }
-
-        // Monitora o tempo restante do vídeo e avança para o próximo episódio quando faltar 3 minutos
-        videoPlayer.ontimeupdate = () => {
-            const timeRemaining = videoPlayer.duration - videoPlayer.currentTime;
-            if (timeRemaining <= 180 && !videoPlayer.nextEpisodeScheduled) { // 180 segundos = 3 minutos
-                videoPlayer.nextEpisodeScheduled = true; // Garante que o próximo episódio só será chamado uma vez
-                nextEpisode();
-            }
-        };
-
-        function enterFullScreen() {
-            if (videoPlayer.requestFullscreen) {
-                videoPlayer.requestFullscreen();
-            } else if (videoPlayer.webkitRequestFullscreen) { // Para navegadores como Safari
-                videoPlayer.webkitRequestFullscreen();
-            } else if (videoPlayer.mozRequestFullScreen) { // Para navegadores como Firefox
-                videoPlayer.mozRequestFullScreen();
-            } else if (videoPlayer.msRequestFullscreen) { // Para Internet Explorer/Edge
-                videoPlayer.msRequestFullscreen();
+                document.getElementById("resultado1").textContent = "Resultado 1 (2x + 11): " + resultado1;
+                document.getElementById("resultado2").textContent = "Resultado 2 (2z + y - 5): " + resultado2;
+                document.getElementById("resultado3").textContent = "Resultado 3 |y + z - x|: " + resultado3;
+            } else {
+                alert("Por favor, insira todos os valores de X, Y e Z.");
             }
         }
     </script>
